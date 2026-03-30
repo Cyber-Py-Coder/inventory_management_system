@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Product</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-slate-900 to-black text-white">
+
+<div class="flex min-h-screen">
+
+  <!-- Sidebar -->
+  <div class="w-64 bg-black p-6">
+    <h2 class="text-2xl font-bold text-cyan-400 mb-8">Inventory</h2>
+    <ul class="space-y-4">
+      <li><a href="/Manager_dashboard">Dashboard</a></li>
+      <li><a href="/products">Products</a></li>
+      <li class="text-cyan-400">Add Product</li>
+      <li><a href="/sales">Sales</a></li>
+      <li><a href="/reports">Reports</a></li>
+    </ul>
+  </div>
+
+  <!-- Content -->
+  <div class="flex-1 flex items-center justify-center">
+
+    <div class="bg-white/5 backdrop-blur-lg p-8 rounded-2xl w-full max-w-md shadow-xl">
+
+      <h1 class="text-2xl font-bold mb-6 text-center">Add New Product</h1>
+
+      <form action="/add_product" method="POST">
+
+        <input type="text" name="Product_name" placeholder="Product Name" required
+          class="w-full p-3 mb-4 bg-gray-900 rounded-lg focus:outline-none" >
+
+        <input type="number" name="price" placeholder="Price" required
+          class="w-full p-3 mb-4 bg-gray-900 rounded-lg">
+
+        <input type="number" name="quantity" placeholder="Quantity" required
+          class="w-full p-3 mb-6 bg-gray-900 rounded-lg">
+
+        <select name="category"
+            class="w-full p-3 bg-gray-900 rounded-lg text-white focus:outline-none" required>
+
+            <option value="">Select Category</option>
+            <option value="electronics">Electronics</option>
+            <option value="clothing">Clothing</option>
+            <option value="grocery">Grocery</option>
+            <option value="stationery">Stationery</option>
+            <option value="furniture">Furniture</option>
+
+        </select>
+        <br><br>
+
+        <select name="Section" required
+            class="w-full p-3 bg-gray-900 rounded-lg text-white focus:outline-none">
+            <option value="">Select Section</option>
+            <option value="Section A ">Section A</option>
+            <option value="Section B">Section B</option>
+            <option value="Section C">Section C</option>
+            <option value="Section D">Section D</option>
+        </select>
+        <br><br>
+        <button class="w-full bg-cyan-500 hover:bg-cyan-400 p-3 rounded-lg font-semibold transition">
+          Add Product
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
