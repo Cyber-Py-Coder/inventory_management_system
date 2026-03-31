@@ -71,11 +71,19 @@ def add_product():
     
     Product_name=request.form.get("Product_name")
     price=request.form.get('price')
-
+    quantity=request.form.get('quantity')
+    category=request.form.get('category')
+    section=request.form.get('Section')
 
     cursor = mydb.cursor(dictionary=True)
     query='insert into products (product_name, quantity, price, category, section ) values(%s, %s, %s, %s, %s)'
-    values=()
+    values=(Product_name, price, quantity, category, section)
+    cursor.execute(query, values)
+    mydb.commit()
+    cursor.close()
+
+    flash ("add Product successfully")
+    return redirect(url_for('product_add_page'))
 
 #------------------------------------------
 @app.route('/logout')
