@@ -46,7 +46,7 @@ def login():
         elif user['role'] == 'employee':
             session['emp_id'] = user['username']
             session['emp_name'] = user['name']
-            return render_template('dashboard.html', name=user['name'])
+            return redirect(url_for('Employee_dashboard'))
     cursor.close()
     flash("Invalid credentials")
     return redirect(url_for('home'))
@@ -99,6 +99,18 @@ def product():
     items=cursor.fetchall()
     cursor.close()
     return render_template('products.html', items=items)
+
+@app.route('/Employee_dashboard')
+def Employee_dashboard():
+    if 'emp_id' not in session:
+        return redirect(url_for('home'))
+    
+    cursor=mydb.cursor(dictionary=True)
+    query='select * from products'
+    cursor.execute(query)
+    items=cursor.fetchall()
+    return render_template('Employee_Dashboard.html', name=session['emp_name'], items=items )
+
 
 
 #------------------------------------------
