@@ -119,6 +119,20 @@ def product_sale():
         return redirect(url_for('home'))
     return render_template('product_sale.html')
 
+#sale item function
+@app.route('/sale_item', methods=['GET', 'POST'])
+def sale_item():
+    if 'emp_id' not in session:
+        return redirect(url_for('home'))
+
+    product_id=request.form.get('product_id')
+    qty=request.form.get('qty')
+
+    cursor=mydb.cursor(dictionary=True)
+    cursor.execute("UPDATE products SET quantity = quantity - %s WHERE id = %s AND quantity >= %s", (qty, product_id, qty))
+
+    return render_template('product_sale.html', sale='Item sale successfully')
+
 #------------------------------------------
 @app.route('/logout')
 def logout():
