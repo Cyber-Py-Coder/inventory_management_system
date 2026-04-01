@@ -100,6 +100,7 @@ def product():
     cursor.close()
     return render_template('products.html', items=items)
 
+#employee dashboard with product view function----------------
 @app.route('/Employee_dashboard')
 def Employee_dashboard():
     if 'emp_id' not in session:
@@ -111,7 +112,12 @@ def Employee_dashboard():
     items=cursor.fetchall()
     return render_template('Employee_Dashboard.html', name=session['emp_name'], items=items )
 
-
+#product sale page
+@app.route('/product_sale')
+def product_sale():
+    if "emp_id" not in session:
+        return redirect(url_for('home'))
+    return render_template('product_sale.html')
 
 #------------------------------------------
 @app.route('/logout')
