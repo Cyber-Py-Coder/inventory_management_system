@@ -21,6 +21,8 @@ def add_header(response):
 
 @app.route('/')
 def home():
+    if "man_id" in session:
+        return redirect(url_for('manager_dashboard'))
     return render_template("login.html")
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -84,6 +86,14 @@ def add_product():
 
     flash ("add Product successfully")
     return redirect(url_for('product_add_page'))
+
+#product page
+@app.route('/product')
+def product():
+    if "man_id" not in session:
+        return redirect(url_for('home'))
+    return
+
 
 #------------------------------------------
 @app.route('/logout')
