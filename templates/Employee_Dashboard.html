@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Employee Inventory Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    background: #0f172a;
+    color: #fff;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: #020617;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #38bdf8;
+}
+
+.sidebar a {
+    display: block;
+    padding: 12px;
+    margin: 10px 0;
+    color: #cbd5f5;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background: #1e293b;
+}
+
+/* Main */
+.main {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Search Box */
+.search-box {
+    margin-bottom: 20px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
+/* Table */
+.table-container {
+    background: #020617;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+}
+
+th {
+    color: #38bdf8;
+    text-align: left;
+}
+
+tr {
+    border-bottom: 1px solid #1e293b;
+}
+
+.low-stock {
+    color: #ef4444;
+}
+
+.logout-btn {
+    background: #ef4444;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>📦 Employee</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">Find Product</a>
+</div>
+
+<div class="main">
+
+    <div class="navbar">
+        <h1>Employee Panel</h1>
+        <h3>Welcome {{name}}</h3>
+
+        <form action="/logout" method="get">
+            <button class="logout-btn">Logout</button>
+        </form>
+    </div>
+
+    <!-- Search -->
+    <div class="search-box">
+        <input type="text" placeholder="🔍 Search product..." onkeyup="searchProduct(this.value)">
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+        <h2>Product List</h2>
+
+        <table id="productTable">
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Status</th>
+            </tr>
+
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.qty }}</td>
+                <td class="{{ 'low-stock' if item.qty < 5 else '' }}">
+                    {{ 'Low Stock' if item.qty < 5 else 'In Stock' }}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+<script>
+function searchProduct(value) {
+    let filter = value.toLowerCase();
+    let rows = document.querySelectorAll("#productTable tr");
+
+    rows.forEach((row, index) => {
+        if(index === 0) return;
+
+        let text = row.innerText.toLowerCase();
+        row.style.display = text.includes(filter) ? "" : "none";
+    });
+}
+</script>
+
+</body>
+</html>
