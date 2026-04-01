@@ -87,12 +87,18 @@ def add_product():
     flash ("add Product successfully")
     return redirect(url_for('product_add_page'))
 
-#product page
+#product page and product view function--------------------
 @app.route('/product')
 def product():
     if "man_id" not in session:
         return redirect(url_for('home'))
-    return
+    
+    cursor=mydb.cursor(dictionary=True)
+    query='select product_name, price, quantity, section from products'
+    cursor.execute(query)
+    items=cursor.fetchall()
+    cursor.close()
+    return render_template('products.html', items=items)
 
 
 #------------------------------------------
