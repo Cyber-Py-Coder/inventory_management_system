@@ -77,7 +77,7 @@ def add_product():
 
     cursor = mydb.cursor(dictionary=True)
     query='insert into products (product_name, quantity, price, category, section ) values(%s, %s, %s, %s, %s)'
-    values=(Product_name, price, quantity, category, section)
+    values=(Product_name, quantity, price, category, section)
     cursor.execute(query, values)
     mydb.commit()
     cursor.close()
