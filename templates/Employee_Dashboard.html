@@ -121,6 +121,7 @@ tr {
     <h2>📦 Employee</h2>
     <a href="#">Dashboard</a>
     <a href="#">Find Product</a>
+    <a href="#">Product Sale</a>
 </div>
 
 <div class="main">
@@ -147,15 +148,17 @@ tr {
             <tr>
                 <th>Product</th>
                 <th>Quantity</th>
+                <th>Section</th>
                 <th>Status</th>
             </tr>
 
             {% for item in items %}
             <tr>
-                <td>{{ item.name }}</td>
-                <td>{{ item.qty }}</td>
-                <td class="{{ 'low-stock' if item.qty < 5 else '' }}">
-                    {{ 'Low Stock' if item.qty < 5 else 'In Stock' }}
+                <td>{{ item.product_name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{item.section}}</td>
+                <td class="{{ 'low-stock' if item.quantity < 5 else '' }}">
+                    {{ 'Low Stock' if item.quantity < 5 else 'In Stock' }}
                 </td>
             </tr>
             {% endfor %}
