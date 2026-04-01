@@ -120,8 +120,7 @@ tr {
 <div class="sidebar">
     <h2>📦 Employee</h2>
     <a href="#">Dashboard</a>
-    <a href="#">Find Product</a>
-    <a href="#">Product Sale</a>
+    <a href="/product_sale">Product Sale</a>
 </div>
 
 <div class="main">
@@ -149,6 +148,7 @@ tr {
                 <th>Product</th>
                 <th>Quantity</th>
                 <th>Section</th>
+                <th>Category</th>
                 <th>Status</th>
             </tr>
 
@@ -157,6 +157,7 @@ tr {
                 <td>{{ item.product_name }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>{{item.section}}</td>
+                <td>{{item.category}}</td>
                 <td class="{{ 'low-stock' if item.quantity < 5 else '' }}">
                     {{ 'Low Stock' if item.quantity < 5 else 'In Stock' }}
                 </td>
