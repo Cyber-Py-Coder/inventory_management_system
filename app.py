@@ -23,6 +23,8 @@ def add_header(response):
 def home():
     if "man_id" in session:
         return redirect(url_for('manager_dashboard'))
+    elif 'emp_id' in session:
+        return redirect(url_for("Employee_dashboard"))
     return render_template("login.html")
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -117,7 +119,12 @@ def Employee_dashboard():
 def product_sale():
     if "emp_id" not in session:
         return redirect(url_for('home'))
-    return render_template('product_sale.html')
+    
+    cursor=mydb.cursor(dictionary=True)
+    query='select * from products'
+    cursor.execute(query)
+    items=cursor.fetchall()
+    return render_template('product_sale.html', items=items)
 
 #sale item function
 @app.route('/sale_item', methods=['GET', 'POST'])

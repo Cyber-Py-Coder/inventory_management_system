@@ -60,23 +60,24 @@ button:hover {
 <body>
 
 <div class="container">
+    <h1 style="text-align: center;">{{sale}}</h1>
     <h2>🛒 Product Sale</h2>
 
-    <form action="/product_sale" method="POST">
+    <form action="/sale_item" method="POST">
 
         <!-- Product Dropdown -->
         <label>Select Product</label>
         <select name="product_id" required>
             {% for item in items %}
             <option value="{{ item.id }}">
-                {{ item.name }} (Stock: {{ item.qty }})
+                {{ item.product_name }} (Stock: {{ item.quantity }})
             </option>
             {% endfor %}
         </select>
 
         <!-- Quantity -->
         <label>Quantity</label>
-        <input type="number" name="quantity" min="1" required>
+        <input type="number" name="qty" min="1" required>
 
         <button type="submit">Submit Sale</button>
     </form>
