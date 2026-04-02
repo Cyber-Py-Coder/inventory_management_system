@@ -156,17 +156,17 @@ tr {
     <div class="cards">
         <div class="card">
             <h3>Total Products</h3>
-            <p>{{ total_products }}</p>
+            <p>{{ total }}</p>
         </div>
 
         <div class="card">
             <h3>Low Stock</h3>
-            <p>{{ low_stock }}</p>
+            <p>{{ qty }}</p>
         </div>
 
         <div class="card">
             <h3>Today Sales</h3>
-            <p>{{ today_sales }}</p>
+            <p>{{ amount }}</p>
         </div>
 
         <div class="card">
@@ -177,20 +177,22 @@ tr {
 
     <!-- Table -->
     <div class="table-container">
-        <h2>Inventory List</h2>
+        <h2>Low Stock items List</h2>
         <table>
             <tr>
-                <th>Product</th>
+                <th>Product Name</th>
                 <th>Quantity</th>
+                <th>Section</th>
                 <th>Status</th>
             </tr>
 
             {% for item in items %}
             <tr>
-                <td>{{ item.name }}</td>
-                <td>{{ item.qty }}</td>
-                <td class="{{ 'low-stock' if item.qty < 5 else '' }}">
-                    {{ 'Low Stock' if item.qty < 5 else 'In Stock' }}
+                <td>{{ item.product_name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{item.section}}</td>
+                <td class="{{ 'low-stock' if item.quantity < 5 else '' }}">
+                    {{ 'Low Stock' if item.quantity < 5 else 'In Stock' }}
                 </td>
             </tr>
             {% endfor %}
