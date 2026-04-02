@@ -31,8 +31,13 @@
       </div>
 
       <div class="bg-white/5 p-5 rounded-xl">
+        <p>Today Orders</p>
+        <h2 class="text-xl text-cyan-400">{{ today_orders }}</h2>
+      </div>
+
+      <div class="bg-white/5 p-5 rounded-xl">
         <p>Total Orders</p>
-        <h2 class="text-green-400">{{ orders }}</h2>
+        <h2 class="text-green-400">{{ total_orders }}</h2>
       </div>
 
       <div class="bg-white/5 p-5 rounded-xl">
@@ -47,18 +52,18 @@
           <tr>
             <th>Product</th>
             <th>Qty</th>
-            <th>Total</th>
+            <th>Price</th>
             <th>Date</th>
           </tr>
         </thead>
 
-        <tbody>
-          {% for sale in sales %}
+        <tbody style="text-align: center;">
+          {% for item in items %}
           <tr class="border-t border-gray-700">
-            <td>{{ sale.product }}</td>
-            <td>{{ sale.qty }}</td>
-            <td>₹ {{ sale.total }}</td>
-            <td>{{ sale.date }}</td>
+            <td>{{ item.product_name }}</td>
+            <td>{{ item.qty }}</td>
+            <td>₹ {{ item.sale_price }}</td>
+            <td>{{ item.sale_date }}</td>
           </tr>
           {% endfor %}
         </tbody>
