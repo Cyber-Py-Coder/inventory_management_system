@@ -77,6 +77,30 @@ def manager_dashboard():
 
     return render_template('dashboard.html', name=session['man_name'], items=items, total=total['count(*)'], qty=qty['count(*)'], amount=amount['sum(sale_price)'], revenue=revenue['sum(sale_price)'])
 
+#sale page
+@app.route('/sales')
+def sales():
+    if 'man_id' not in session:
+        return redirect(url_for('home'))
+    
+    cursor=mydb.cursor(dictionary=True)
+    cursor.execute('SELECT sum(sale_price) FROM sales WHERE DATE(sale_date) = CURDATE();') #functionn for today sales
+    amount=cursor.fetchone()
+
+    cursor.execute('SELECT count(*) FROM sales WHERE DATE(sale_date) = CURDATE();') #functionn for today orders
+    today_order=cursor.fetchone()
+
+    cursor.execute('SELECT count(*) FROM sales;') #function for totals orders
+    total_order=cursor.fetchone()
+
+    cursor.execute('select sum(sale_price) from sales') #function for total revenue
+    revenue=cursor.fetchone()
+    
+    cursor.execute('select * from sales')
+    items=cursor.fetchall()
+    cursor.close()
+    return render_template('sales.html', items=items ,revenue=revenue['sum(sale_price)'], today_sales=amount['sum(sale_price)'], total_orders=total_order['count(*)'],today_orders=today_order['count(*)'])
+
 #add quantity page
 @app.route('/add_quantity')
 def quantity():
