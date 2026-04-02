@@ -56,8 +56,24 @@ def login():
 @app.route('/Manager_dashboard')
 def manager_dashboard():
     if 'man_id' not in session:
-        return redirect(url_for('home'))  
-    return render_template('dashboard.html', name=session['man_name'])
+        return redirect(url_for('home'))
+    
+    cursor=mydb.cursor(dictionary=True)
+    cursor.execute("select count(*) from products") #function for count all products 
+    total=cursor.fetchone()
+
+    cursor.execute('select count(*) from products where quantity<=5;') #function for low stock
+    qty=cursor.fetchone()
+
+    cursor.execute('select * from products where quantity<5')
+    items=cursor.fetchall()
+
+    cursor.execute('SELECT sum(sale_price) FROM sales WHERE DATE(sale_date) = CURDATE();') #functionn for today sale
+    amount=cursor.fetchone()
+
+    cursor.execute('select sum(sale_price) from sales') #function for total revenue
+    revenue=cursor.fetchone()
+    return render_template('dashboard.html', name=session['man_name'], items=items, total=total['count(*)'], qty=qty['count(*)'], amount=amount['sum(sale_price)'], revenue=revenue['sum(sale_price)'])
 
 
 #add product page
