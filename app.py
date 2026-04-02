@@ -134,11 +134,21 @@ def sale_item():
 
     product_id=request.form.get('product_id')
     qty=request.form.get('qty')
+    product_name=request.form.get('product_name')
+    price=request.form.get('price')
 
     cursor=mydb.cursor(dictionary=True)
     cursor.execute("UPDATE products SET quantity = quantity - %s WHERE id = %s AND quantity >= %s", (qty, product_id, qty))
 
-    return render_template('product_sale.html', sale='Item sale successfully')
+    query='insert into sales (product_name, sale_price, product_id, qty) VALUES (%s, %s, %s, %s)'
+    values=(product_name, price, product_id, qty)
+    cursor.execute(query, values)
+    mydb.commit()
+    cursor.close()
+    
+
+    flash("Item sold successfully!", "success")
+    return redirect(url_for('product_sale'))
 
 #------------------------------------------
 @app.route('/logout')

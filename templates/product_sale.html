@@ -54,26 +54,62 @@ button {
 button:hover {
     background: #16a34a;
 }
+
+.flash-container {
+    margin: 20px;
+}
+
+.flash {
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+/* Categories */
+.flash.success { background-color: #28a745; }
+.flash.error { background-color: #dc3545; }
+.flash.warning { background-color: #ffc107; color: black; }
 </style>
 </head>
 
 <body>
 
 <div class="container">
-    <h1 style="text-align: center;">{{sale}}</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+    <!-- <h1 style="text-align: center;">{{sale}}</h1> -->
     <h2>🛒 Product Sale</h2>
 
     <form action="/sale_item" method="POST">
 
         <!-- Product Dropdown -->
         <label>Select Product</label>
-        <select name="product_id" required>
+        <select name="product_id" id="productSelect" required>
             {% for item in items %}
-            <option value="{{ item.id }}">
+            <option 
+                value="{{ item.id }}"
+                data-name="{{ item.product_name }}"
+                data-price="{{ item.price }}">
+                
                 {{ item.product_name }} (Stock: {{ item.quantity }})
             </option>
             {% endfor %}
         </select>
+
+        <!-- Hidden Fields -->
+        <input type="hidden" name="product_name" id="productName">
+        <input type="hidden" name="price" id="productPrice">
 
         <!-- Quantity -->
         <label>Quantity</label>
@@ -81,8 +117,25 @@ button:hover {
 
         <button type="submit">Submit Sale</button>
     </form>
-
 </div>
+
+<script>
+    const select = document.getElementById("productSelect");
+    const nameField = document.getElementById("productName");
+    const priceField = document.getElementById("productPrice");
+
+    function updateHiddenFields() {
+        const selected = select.options[select.selectedIndex];
+        nameField.value = selected.getAttribute("data-name");
+        priceField.value = selected.getAttribute("data-price");
+    }
+
+    // Initial run
+    updateHiddenFields();
+
+    // On change
+    select.addEventListener("change", updateHiddenFields);
+</script>
 
 </body>
 </html>
