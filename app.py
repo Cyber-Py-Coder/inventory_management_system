@@ -73,7 +73,39 @@ def manager_dashboard():
 
     cursor.execute('select sum(sale_price) from sales') #function for total revenue
     revenue=cursor.fetchone()
+    cursor.close()
+
     return render_template('dashboard.html', name=session['man_name'], items=items, total=total['count(*)'], qty=qty['count(*)'], amount=amount['sum(sale_price)'], revenue=revenue['sum(sale_price)'])
+
+#add quantity page
+@app.route('/add_quantity')
+def quantity():
+    if 'man_id' not in session:
+        return redirect(url_for('home'))
+    
+    cursor=mydb.cursor(dictionary=True)
+    cursor.execute('select * from products')
+    items=cursor.fetchall()
+    return render_template('add_qty.html', items=items)
+
+
+@app.route('/add_qty', methods=['POST'])
+def add_qty_post():
+    if 'man_id' not in session:
+        return redirect(url_for('home'))
+
+    product_id = request.form['product_id']
+    product_name = request.form['product_name']
+    price = request.form['price']
+    qty = int(request.form['qty'])
+
+    cursor = mydb.cursor()
+    # Update product quantity in database
+    cursor.execute('UPDATE products SET quantity = quantity + %s WHERE id = %s', (qty, product_id))
+    mydb.commit()
+
+    flash(f"Added {qty} units to {product_name}", "success")
+    return redirect(url_for('quantity'))  # redirect back to add quantity page
 
 
 #add product page
