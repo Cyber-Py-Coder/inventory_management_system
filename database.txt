@@ -19,3 +19,15 @@ CREATE TABLE user (
     name VARCHAR(40) DEFAULT NULL,
     PRIMARY KEY (id)
 )
+
+CREATE TABLE sales (
+    id INT NOT NULL AUTO_INCREMENT,
+    product_name VARCHAR(100),
+    sale_price DECIMAL(10,2),
+    product_id INT,
+    qty INT,
+    sale_date DATE DEFAULT (CURDATE()),
+    
+    PRIMARY KEY (id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
