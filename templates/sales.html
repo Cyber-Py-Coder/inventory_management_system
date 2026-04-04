@@ -52,7 +52,8 @@
           <tr>
             <th>Product</th>
             <th>Qty</th>
-            <th>Price</th>
+            <th>Price per piece</th>
+            <th>Total Price</th>
             <th>Date</th>
           </tr>
         </thead>
@@ -63,6 +64,7 @@
             <td>{{ item.product_name }}</td>
             <td>{{ item.qty }}</td>
             <td>₹ {{ item.sale_price }}</td>
+            <td>₹{{item.qty * item.sale_price}}</td>
             <td>{{ item.sale_date }}</td>
           </tr>
           {% endfor %}
