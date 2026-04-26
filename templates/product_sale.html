@@ -67,6 +67,12 @@ button:hover {
     font-weight: bold;
 }
 
+.top-pos {
+position: absolute;
+ top: 50px;
+ right: 10px;
+}
+
 /* Categories */
 .flash.success { background-color: #28a745; }
 .flash.error { background-color: #dc3545; }
@@ -75,6 +81,10 @@ button:hover {
 </head>
 
 <body>
+
+<div class="top-pos">
+<a style="text-decoration: none; color: skyblue;" href="/Employee_dashboard"><h1>Dashboard</h1></a>
+</div>
 
 <div class="container">
     {% with messages = get_flashed_messages(with_categories=true) %}
