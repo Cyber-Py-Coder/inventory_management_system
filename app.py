@@ -1,5 +1,6 @@
-from flask import Flask, session, redirect, render_template, flash, request, url_for
+from flask import Flask, session, redirect, render_template, flash, request, url_for, jsonify, request
 import mysql.connector
+import os
 
 app=Flask(__name__)
 
