@@ -66,7 +66,7 @@ def manager_dashboard():
     cursor.execute('select count(*) from products where quantity<=5;') #function for low stock
     qty=cursor.fetchone()
 
-    cursor.execute('select * from products where quantity<5')
+    cursor.execute('select * from products where quantity<=5')
     items=cursor.fetchall()
 
     cursor.execute('SELECT sum(sale_price) FROM sales WHERE DATE(sale_date) = CURDATE();') #functionn for today sale
